@@ -5,6 +5,7 @@
   import Grid from "../components/Grid.svelte";
   import Skybox from "../components/Skybox.svelte";
   import Moon from "../components/Moon.svelte";
+  import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
 
   let mission_name = "nothing";
 </script>
@@ -51,8 +52,8 @@
             near={1}
             far={65536}
           ></T.PerspectiveCamera>
-
           <Moon />
+          <Skybox />
         </Canvas>
       </main>
     </AppContent>

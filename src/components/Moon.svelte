@@ -1,7 +1,7 @@
 <script lang="ts">
   import { interactivity, useTexture } from "@threlte/extras";
   import { T } from "@threlte/core";
-  import { SphereGeometry, ShaderMaterial, Vector2, Vector3 } from "three";
+  import { SphereGeometry, Vector2, Vector3 } from "three";
   import fragmentShader from "./fragment.glsl?raw";
   import vertexShader from "./vertex.glsl?raw";
 
@@ -14,14 +14,14 @@
   moonGeo.computeTangents();
   const light = {
     speed: 0.1,
-    distance: 1000,
-    position: new Vector3(0, 0, 0),
+    distance: 100,
+    position: new Vector3(1000, 1000, 1000),
   };
   interactivity();
 </script>
 
 {#await assets then [t, n]}
-  <T.Mesh geometry={moonGeo} rotation.y={180}>
+  <T.Mesh geometry={moonGeo} rotation.y={180} position={[0, 0, 0]}>
     <T.ShaderMaterial
       {fragmentShader}
       {vertexShader}

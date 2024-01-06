@@ -43,10 +43,6 @@
           }}
           rendererParameters={{ logarithmicDepthBuffer: true }}
         >
-          <T.PointLight color="white" intensity={0.2} position={[0, 5, 0]} />
-          <T.PointLight color="blue" intensity={0.5} position={[5, 5, 0]} />
-          <T.PointLight color="yellow" intensity={0.5} position={[-5, -5, 0]} />
-
           <T.PerspectiveCamera
             makeDefault
             let:ref={camera}

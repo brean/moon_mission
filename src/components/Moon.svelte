@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { useTexture } from "@threlte/extras";
+  import { interactivity, useTexture } from "@threlte/extras";
   import { T } from "@threlte/core";
-  import { SphereGeometry } from "three";
+  import { SphereGeometry, ShaderMaterial, Vector2, Vector3 } from "three";
+  import fragmentShader from "./fragment.glsl?raw";
+  import vertexShader from "./vertex.glsl?raw";
 
   const radius = 100;
   const segments = 50;
@@ -10,10 +12,37 @@
   const assets = Promise.all([texture, normal]);
   const moonGeo = new SphereGeometry(radius, segments, segments);
   moonGeo.computeTangents();
+  const light = {
+    speed: 0.1,
+    distance: 1000,
+    position: new Vector3(0, 0, 0),
+  };
+  interactivity();
 </script>
 
 {#await assets then [t, n]}
-  <T.Mesh {moonGeo} rotation.y={180}>
-    <T.MeshStandardMaterial map={t} normalMap={n} />
+  <T.Mesh geometry={moonGeo} rotation.y={180}>
+    <T.ShaderMaterial
+      {fragmentShader}
+      {vertexShader}
+      uniforms={{
+        lightPosition: {
+          type: "v3",
+          value: light.position,
+        },
+        textureMap: {
+          type: "t",
+          value: t,
+        },
+        normalMap: {
+          type: "t",
+          value: n,
+        },
+        uvScale: {
+          type: "v2",
+          value: new Vector2(1.0, 1.0),
+        },
+      }}
+    />
   </T.Mesh>
 {/await}
